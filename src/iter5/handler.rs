@@ -46,7 +46,7 @@ pub async fn handle_register(
                 .map_err(|_| EzyTutorError::TeraError("Template error".to_string()))?;
         } else { //if passwords match -> create new tutor
             let new_tutor = json!({
-                "tutor_name": &params.name, //user_name = tutor_name
+                "tutor_name": &params.name, //tutor_name
                 "tutor_pic_url": &params.imageurl,
                 "tutor_profile": &params.profile
             });
@@ -71,7 +71,7 @@ pub async fn handle_register(
                 user_password: hash,
             };
             let _tutor_created = post_new_user(&app_state.db, user).await?;
-            println!("created tutor {:?}", _tutor_created);
+            println!("created User {:?}", _tutor_created);
         }
     } else { //if user_name found in database = user_id
         ctx.insert("error", "User Id/name already exists");
