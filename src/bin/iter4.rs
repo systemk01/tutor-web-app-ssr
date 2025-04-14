@@ -15,13 +15,13 @@ pub struct Tutor {
 async fn handle_get_tutors(tmpl: web::Data<tera::Tera>) -> Result<HttpResponse, Error> {
     let client = Client::new();
     let response = client
-    .get("http://localhost:3000/tutors/")
-    .send()
-    .await
-    .unwrap()
-    .body()
-    .await
-    .unwrap();
+        .get("http://localhost:3000/tutors/")
+        .send()
+        .await
+        .unwrap()
+        .body()
+        .await
+        .unwrap();
 
     let str_list = std::str::from_utf8(&response.as_ref()).unwrap();
     let tutor_list: Vec<Tutor> = serde_json::from_str(str_list).unwrap();
