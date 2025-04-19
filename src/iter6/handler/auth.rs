@@ -111,7 +111,6 @@ pub async fn handle_signin(
     app_state: web::Data<AppState>,
     params: web::Form<TutorSignInForm>,
 ) -> Result<HttpResponse, Error> {
-
     let mut ctx = tera::Context::new();
     let s;
     let username = params.username.clone();
@@ -119,25 +118,27 @@ pub async fn handle_signin(
 
     if let Ok(user) = user {
         let does_password_match = argon2::verify_encoded(
-            &user.user_password.trim(), 
-            params.password.clone().as_bytes(),)
-            .unwrap();
+            &user.user_password.trim(),
+            params.password.clone().as_bytes(),
+        )
+        .unwrap();
         if !does_password_match {
             ctx.insert("error", "Invalid login");
-        ctx.insert("current_name", &params.username);
-        ctx.insert("current_password", &params.password);
-        s = tmpl
-            .render("signin.html", &ctx)
-            .map_err(|_| EzyTutorError::TeraError(
-                "Template error".to_string()))?;
+            ctx.insert("current_name", &params.username);
+            ctx.insert("current_password", &params.password);
+            s = tmpl
+                .render("signin.html", &ctx)
+                .map_err(|_| EzyTutorError::TeraError("Template error".to_string()))?;
         } else {
             ctx.insert("name", &params.username);
             ctx.insert("title", &"Signin confirmation".to_owned());
-            ctx.insert("message", &"You have successfully looged in to Ezytutor".to_owned());
+            ctx.insert(
+                "message",
+                &"You have successfully looged in to Ezytutor".to_owned(),
+            );
             s = tmpl
-            .render("user.html", &ctx)
-            .map_err(|_| EzyTutorError::TeraError(
-                "Template error".to_string()))?;
+                .render("user.html", &ctx)
+                .map_err(|_| EzyTutorError::TeraError("Template error".to_string()))?;
         }
     } else {
         ctx.insert("error", "User id not found");
@@ -145,10 +146,8 @@ pub async fn handle_signin(
         ctx.insert("current_password", &params.password);
         s = tmpl
             .render("signin.html", &ctx)
-            .map_err(|_| EzyTutorError::TeraError(
-                "Template error".to_string()))?;
+            .map_err(|_| EzyTutorError::TeraError("Template error".to_string()))?;
     }
-
 
     Ok(HttpResponse::Ok().content_type("text/html").body(s))
 }

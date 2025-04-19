@@ -1,10 +1,9 @@
 #[path = "../iter6/mod.rs"]
 mod iter6;
 use actix_web::{App, HttpServer, web};
-use actix_web::web::Data;
 use dotenv::dotenv;
 use iter6::{dbaccess, errors, handler, model, routes, state::AppState};
-use routes::app_config;
+use routes::{app_config, course_config};
 use sqlx::postgres::PgPool;
 use std::env;
 use tera::Tera;
@@ -26,6 +25,7 @@ async fn main() -> std::io::Result<()> {
         App::new()
             .app_data(web::Data::new(tera))
             .app_data(shared_data.clone())
+            .configure(course_config)
             .configure(app_config)
     })
     .bind(&host_port)?
