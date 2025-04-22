@@ -23,7 +23,7 @@ async fn handle_get_tutors(tmpl: web::Data<tera::Tera>) -> Result<HttpResponse, 
         .await
         .unwrap();
 
-    let str_list = std::str::from_utf8(&response.as_ref()).unwrap();
+    let str_list = std::str::from_utf8(response.as_ref()).unwrap();
     let tutor_list: Vec<Tutor> = serde_json::from_str(str_list).unwrap();
     let mut ctx = tera::Context::new();
     ctx.insert("tutors", &tutor_list);

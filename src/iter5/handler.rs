@@ -59,7 +59,7 @@ pub async fn handle_register(
                 .unwrap()
                 .body()
                 .await?;
-            let tutor_response: TutorResponse = serde_json::from_str(&std::str::from_utf8(&res)?)?;
+            let tutor_response: TutorResponse = serde_json::from_str(std::str::from_utf8(&res)?)?;
             s = format!(
                 "Congratulations. You have been successfully registered with EzyTutor and your tutor_name/user_name is: {} and tutor id is: {}. To start using EzyTutor, please login with your credentials.",
                 tutor_response.tutor_name, tutor_response.tutor_id
