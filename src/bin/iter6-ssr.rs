@@ -2,7 +2,7 @@
 mod iter6;
 use actix_web::{App, HttpServer, web};
 use dotenv::dotenv;
-use iter6::{dbaccess, errors, handler, model, routes, state::AppState};
+use iter6::{dbaccess, errors, handler, model, routes::{self, tutor_config}, state::AppState};
 use routes::{app_config, course_config};
 use sqlx::postgres::PgPool;
 use std::env;
@@ -27,6 +27,7 @@ async fn main() -> std::io::Result<()> {
             .app_data(shared_data.clone())
             .configure(course_config)
             .configure(app_config)
+            .configure(tutor_config)
     })
     .bind(&host_port)?
     .run()

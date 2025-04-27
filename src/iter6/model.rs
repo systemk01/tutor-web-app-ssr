@@ -25,6 +25,14 @@ pub struct TutorResponse {
     pub tutor_pic_url: String,
     pub tutor_profile: String,
 }
+//additional task model for showing all tutors
+#[derive(Serialize, Deserialize, Debug)]
+pub struct Tutor {
+    pub tutor_id: i32,
+    pub tutor_name: String,
+    pub tutor_pic_url: String,
+    pub tutor_profile: String,
+}
 
 #[derive(Debug, Serialize, Deserialize, sqlx::FromRow)]
 pub struct User {

@@ -1,5 +1,6 @@
 use crate::handler::auth::{handle_register, handle_signin, show_register_form, show_signin_form};
 use crate::handler::course::{handle_delete_course, handle_insert_course, handle_update_course};
+use crate::handler::tutor::handle_get_tutors;
 use actix_files as fs;
 use actix_web::web::{self};
 
@@ -25,5 +26,13 @@ pub fn course_config(config: &mut web::ServiceConfig) {
                 web::resource("delete/{tutor_id}/{course_id}")
                     .route(web::delete().to(handle_delete_course)),
             ),
+    );
+}
+
+pub fn tutor_config(config: &mut web::ServiceConfig) {
+    config.service(
+        web::scope("")
+        .service(fs::Files::new("/static", "./static").show_files_listing())
+        .service(web::resource("/tutors").route(web::get().to(handle_get_tutors))),
     );
 }
