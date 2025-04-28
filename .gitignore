@@ -2,3 +2,4 @@
 .gitignore
 Cargo.lock
 .env
+.DS_STORE
